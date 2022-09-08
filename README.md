@@ -1,4 +1,4 @@
-### List of used Ansible technology
+## List of used Ansible technology
 #### 1)	Inventory file
 [ansible.cfg](https://github.com/zuFrost/ansible_netzlink/blob/main/ansible.cfg)
 #### 2)	Hosts file with groups
