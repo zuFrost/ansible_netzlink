@@ -1,0 +1,44 @@
+---
+- name: Ansible Vault use
+  hosts: all
+  become: yes
+
+  vars: 
+    admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63633339613230636662323166373061356137323263653764643862613161653833386531653136
+          6635313837316131663539356436326561323339353663660a633738623763336162323832613236
+          32376534333666363263313039626165356266366631356566633165363166613132613134316538
+          3632613364666263660a653335316337386134653861313432326163343562613030653963396232
+          38346263646537373735646436386333613734626233303731613161636637613664
+
+  tasks:
+  - name: Test ping servers
+    ping:
+
+  - name: Install package Tree
+    yum: name=tree state=latest
+
+  - name: Create Config File for RedHat servers
+    copy:
+      dest: "/home/ec2-user/myconfig.conf"
+      content: |
+        port = 9092
+        log = 7days
+        home = /opt/kafka/bin/
+        user = admin
+        password = {{ admin_password }}
+    when: ansible_os_family == "RedHat"
+
+  - name: Create Config File for Debian servers
+    copy:
+      dest: "/home/ubuntu/myconfig.conf"
+      content: |
+        port = 9092
+        log = 7days
+        home = /opt/kafka/bin/
+        user = admin
+        password = {{ admin_password }}
+    when: ansible_os_family == "Debian"    
+
+
