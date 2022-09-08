@@ -1,0 +1,10 @@
+[STAGING_SERVERS_WEB]
+linuxX1   ansible_host=172.31.39.128 owner=Nikolaus
+
+[PROD_SERVERS_WEB]
+linuxX3   ansible_host=172.31.32.168 owner=Edvin
+linuxX2   ansible_host=172.31.37.66 owner=Jen
+
+[All_LINUX:children]
+STAGING_SERVERS_WEB
+PROD_SERVERS_WEB
